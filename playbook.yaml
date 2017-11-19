@@ -1,0 +1,22 @@
+---
+- hosts: all
+  pre_tasks:
+  - name: include environment group vars
+    include_vars:
+      dir: 'environments/{{ env }}/group_vars/'
+      files_matching: '.*.yaml'
+  - name: include environment hosts vars
+    include_vars:
+      dir: 'environments/{{ env }}/hosts_vars/'
+      files_matching: '{{ ansible_fqdn }}.yaml'
+  - name: include environment secret vars
+    include_vars:
+      dir: 'environments/{{ env }}/hosts_vars_secret/'
+      files_matching: '{{ ansible_fqdn }}.secret.yaml'
+  roles:
+    - common
+    - ntp
+
+- hosts: node1
+  roles:
+    - etcd
