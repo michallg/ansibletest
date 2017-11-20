@@ -19,4 +19,8 @@
 
 - hosts: node1
   roles:
-    - etcd
+    - apache2
+
+- hosts: node2
+  roles:
+    - mysql
