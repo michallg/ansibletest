@@ -1,0 +1,9 @@
+---
+packages_list:
+  - "vim"
+  - "telnet"
+
+extra_packages_list:
+  - "mc"
+  - "zsh"
+  - "git"
