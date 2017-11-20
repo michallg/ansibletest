@@ -1,1 +1,18 @@
 ---
+- name: restart apache2
+  service:
+    name: "{{ apache2_daemon }}"
+    state: "restarted"
+  when: apache2_enabled
+
+- name: start apache2
+  service:
+    name: "{{ apache2_daemon }}"
+    state: "started"
+  when: apache2_enabled
+
+- name: stop apache2
+  service:
+    name: "{{ apache2_daemon }}"
+    state: "stopped"
+  when: not apache2_enabled

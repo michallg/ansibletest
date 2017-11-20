@@ -3,3 +3,38 @@
   apt:
     name: "{{ item }}"
   with_items: "{{ apache_package_name }}"
+  notify:
+    - restart apache2
+
+- name: Create new www directory
+  file:
+    path: "/var/www/html2"
+    owner: "root"
+    group: "root"
+    mode: 0755
+    state: directory
+
+- name: Copy static index.html
+  copy:
+    src: "index.html"
+    dest: "/var/www/html2/index.html"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create dynamic index2.html file
+  template:
+    src: "index2.html.j2"
+    dest: "/var/www/html2/index2.html"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Change default website directory
+  lineinfile:
+    dest: "/etc/apache2/sites-available/000-default.conf"
+    regexp: "DocumentRoot /var/www/html"
+    line: "DocumentRoot /var/www/html2"
+    state: present
+  notify:
+    - restart apache2
