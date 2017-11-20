@@ -1,0 +1,25 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install base packages
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ packages_list }}"
+
+- name: Install extra packages
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ extra_packages_list }}"
+
+- name: Create text file in home directory
+  file:
+    path: "/home/vagrant/testfile.txt"
+    mode: 0644
+    force: yes
+    state: touch
+
+- name: print ansible connection username
+  debug:
+    msg: "ansible connection username {{ ansible_env.USER }}"

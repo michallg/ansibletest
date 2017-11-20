@@ -1,0 +1,6 @@
+---
+packages_list:
+  - libselinux-python
+
+extra_packages_list:
+  - git
